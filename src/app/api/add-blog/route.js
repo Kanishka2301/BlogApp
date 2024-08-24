@@ -1,4 +1,4 @@
-import connectToDB from "@/database";
+import connectToDB from "../../database";
 import Joi from "joi";
 import { NextResponse } from "next/server";
 
