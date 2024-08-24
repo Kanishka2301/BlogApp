@@ -1,12 +1,22 @@
 import mongoose from "mongoose";
 
 const connectToDB = async () => {
-  const connectionUrl =
-    "mongodb+srv://kanishka:kanishka@23@atlascluster.tgmmi.mongodb.net/?retryWrites=true&w=majority&appName=AtlasCluster";
-  mongoose
-    .connect(connectionUrl)
-    .then(() => console.log("Blog database connection is successfull"))
-    .catch((error) => console.log(error));
+  const connectionUrl = process.env.MONGODB_URI;
+
+  if (!connectionUrl) {
+    throw new Error("MONGODB_URI is not defined in .env file");
+  }
+
+  try {
+    await mongoose.connect(connectionUrl, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("Blog database connection is successful");
+  } catch (error) {
+    console.log("Database connection failed:", error);
+    throw error;
+  }
 };
 
 export default connectToDB;

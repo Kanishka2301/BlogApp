@@ -1,6 +1,7 @@
 import connectToDB from "../../database";
 import Joi from "joi";
 import { NextResponse } from "next/server";
+import Blog from "../../../../Blog";
 
 const AddNewBlog = Joi.object({
   title: Joi.string().required(),
@@ -9,9 +10,9 @@ const AddNewBlog = Joi.object({
 
 export async function POST(req) {
   try {
-    await connectToDB;
+    await connectToDB();
     const extraBlogData = await req.json();
-    const { title, description } = extractBlogData;
+    const { title, description } = extraBlogData;
 
     const { error } = AddNewBlog.validate({
       title,
@@ -24,7 +25,7 @@ export async function POST(req) {
       });
     }
 
-    const newlyCreatedBlogItem = await Blog.create(extractBlogData);
+    const newlyCreatedBlogItem = await Blog.create(extraBlogData);
     if (newlyCreatedBlogItem) {
       return NextResponse.json({
         success: true,
