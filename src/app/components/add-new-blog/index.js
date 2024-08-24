@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
+console.log({ DialogContent });
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 
